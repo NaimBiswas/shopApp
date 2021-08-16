@@ -1,16 +1,33 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { FlatList, RefreshControl, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import FlatListRenderViewScreen from '../../components/FlatListRenderViewScreen'
 import HeaderRightOption from '../../components/HeaderRightOption'
 import StatusBarStyle from '../../components/StatusBarStyle'
 import dummyProduct from '../../dummyData/dummyData'
 function AllProductScreen({ navigation }) {
-   // const [data, setData] = useState()
+   const [refreshing, setRefreshing] = React.useState(false);
+   const [listData, setListData] = React.useState(dummyProduct);
 
-   // fetch('https://fakestoreapi.com/products', {
-   //    method: 'GET',
-   // }).then(response => response.json()).then(data => setData(data)).catch(err => console.log(err));
+   const onRefresh = useCallback(async () => {
+      setRefreshing(true);
+      if (listData.length < 10) {
+         try {
+
+            setListData(dummyProduct.concat(dummyProduct));
+            setRefreshing(false)
+         } catch (error) {
+            console.error("Hello " + error);
+         }
+      } else {
+         ToastAndroid.show('No more new data available', ToastAndroid.SHORT);
+         setRefreshing(false)
+      }
+
+
+   },
+      [listData.length],
+   )
 
    useEffect(() => {
       navigation.setOptions({
@@ -27,7 +44,7 @@ function AllProductScreen({ navigation }) {
 
          <FlatList
             initialNumToRender={10}
-
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
             data={dummyProduct}
             renderItem={itemData => (
                <FlatListRenderViewScreen navigation={navigation} itemData={itemData.item} />
