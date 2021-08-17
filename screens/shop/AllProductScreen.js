@@ -43,7 +43,6 @@ function AllProductScreen({ navigation }) {
    }, [dispatch, navigation])
 
    const AllProduct = useSelector(state => state.product.products)
-   console.log(AllProduct);
    return (
       <View>
          <StatusBarStyle />

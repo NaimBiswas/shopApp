@@ -2,10 +2,14 @@
 import React from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
 import { Icon } from 'react-native-elements';
-
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/slicer/CartSlice'
 function FlatListRenderViewScreen({ itemData, navigation }) {
+   const dispatch = useDispatch();
+   const addToCartFun = (item) => {
+      dispatch(addToCart(item))
 
+   };
    return (
 
 
@@ -27,14 +31,14 @@ function FlatListRenderViewScreen({ itemData, navigation }) {
                   <Pressable onPress={() => navigation.navigate('ProductDetails', { id: itemData.id })}
                      style={styles.DetailsButton}>
                      <Text style={styles.buttonTitle}>
-                        <Icon type='font-awesome-5' name='eye' size={26} color="#fff" />
+                        <Icon type="font-awesome-5" name="eye" size={26} color="#fff" />
                      </Text>
                   </Pressable>
 
 
                   <Text style={styles.priceText}>$ {itemData.price}</Text>
 
-                  <Pressable onPress={() => Alert.alert("Thanks")} style={styles.DetailsButton}>
+                  <Pressable onPress={() => addToCartFun(itemData)} style={styles.DetailsButton}>
                      <Text style={styles.buttonTitle}>
                         <Icon type="fontisto" name="shopping-basket-add" color="#fff" size={26} />
                      </Text>
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
       margin: 15,
       backgroundColor: '#3EB595',
       borderRadius: 6,
-      shadowColor: "#000",
+      shadowColor: '#000',
       shadowOffset: {
          width: 0,
          height: 2,
