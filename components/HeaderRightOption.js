@@ -9,7 +9,7 @@ function HeaderRightOption({ data, navigation }) {
    return (
 
       <View>
-         <Icon onPress={() => navigation.navigate('CartedProduct')} name='opencart' size={28} type='fontisto' color="#fff"
+         <Icon onPress={() => navigation.navigate('CartedProduct')} name='opencart' size={26} type='fontisto' color="#fff"
             style={{ paddingRight: 10 }}
          />
          {

@@ -3,17 +3,18 @@
 
 import * as React from 'react';
 import { View, Text } from 'react-native';
-
-
-
 import MainNav from './Navigation/MainNav';
 
 
+import { Provider } from 'react-redux'
+import store from './store/store';
 
 
 function App() {
    return (
-      <MainNav />
+      <Provider store={store}>
+         <MainNav />
+      </Provider>
    );
 }
 

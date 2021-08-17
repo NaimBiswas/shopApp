@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import AllProductScreen from '../screens/shop/AllProductScreen';
 import ProductDetails from '../screens/shop/ProductDetailsScreen';
 import CartedProduct from '../screens/shop/CartedProduct';
@@ -13,9 +13,12 @@ function MainNav() {
    return (
 
       <NavigationContainer>
-         <Stack.Navigator>
+         <Stack.Navigator
+
+         >
             <Stack.Screen name="AllProducts" component={AllProductScreen}
                options={{
+
                   title: 'All Products',
                   headerStyle: {
                      backgroundColor: '#175973',

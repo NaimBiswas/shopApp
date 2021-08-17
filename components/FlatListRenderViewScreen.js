@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { memo, PureComponent, useState } from 'react';
+import React from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
