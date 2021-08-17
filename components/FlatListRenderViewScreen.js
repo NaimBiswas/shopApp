@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
+import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, TouchableNativeFeedback, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/slicer/CartSlice'
@@ -38,7 +38,10 @@ function FlatListRenderViewScreen({ itemData, navigation }) {
 
                   <Text style={styles.priceText}>$ {itemData.price}</Text>
 
-                  <Pressable onPress={() => addToCartFun(itemData)} style={styles.DetailsButton}>
+                  <Pressable onPress={() => {
+                     addToCartFun(itemData)
+                     ToastAndroid.show('Product Added On Cart', ToastAndroid.SHORT);
+                  }} style={styles.DetailsButton}>
                      <Text style={styles.buttonTitle}>
                         <Icon type="fontisto" name="shopping-basket-add" color="#fff" size={26} />
                      </Text>
