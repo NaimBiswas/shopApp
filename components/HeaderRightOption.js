@@ -1,7 +1,7 @@
 /* eslint-disable jsx-quotes */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { Alert, StyleSheet, Text, TouchableHighlightBase, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, TouchableHighlightBase, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 function HeaderRightOption({ data, navigation }) {
@@ -14,9 +14,9 @@ function HeaderRightOption({ data, navigation }) {
          />
          {
             data !== 0 &&
-            <View style={style.cartLable}>
+            <Pressable onPress={() => navigation.navigate('CartedProduct')} style={style.cartLable}>
                <Text style={style.LabelStyle}>{data}</Text>
-            </View>
+            </Pressable>
 
          }
       </View>

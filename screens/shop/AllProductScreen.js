@@ -11,6 +11,7 @@ function AllProductScreen({ navigation }) {
    const [refreshing, setRefreshing] = useState(false);
    const [listData, setListData] = useState(dummyProduct);
 
+   const itemLength = useSelector(state => state.cart.totalItems)
    const onRefresh = useCallback(async () => {
       setRefreshing(true);
       if (listData.length > 10) {
@@ -32,15 +33,14 @@ function AllProductScreen({ navigation }) {
    const dispatch = useDispatch()
 
    useEffect(() => {
-
       dispatch(setProduct())
       navigation.setOptions({
 
          headerRight: () => (
-            <HeaderRightOption navigation={navigation} data={0} />
+            <HeaderRightOption navigation={navigation} data={itemLength} />
          ),
       })
-   }, [dispatch, navigation])
+   }, [dispatch, itemLength, navigation])
 
    const AllProduct = useSelector(state => state.product.products)
    return (

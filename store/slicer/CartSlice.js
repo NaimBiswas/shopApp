@@ -8,7 +8,6 @@ const CartSlice = createSlice({
       items: {},
       totalAmount: 0,
       totalItems: 0,
-
    },
    reducers: {
       addToCart: (state, action) => {
@@ -40,8 +39,8 @@ const CartSlice = createSlice({
             state.totalAmount = state.totalAmount + state.items.subTotal;
             state.totalItems = state.totalItems + state.items[id].quantity
          }
-         console.log(state);
 
+         console.log(state);
 
 
 
