@@ -4,6 +4,7 @@ import { Alert, Image, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, To
 import { Icon } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/slicer/CartSlice'
+import { singleProduc } from '../store/slicer/ProductSlice';
 function FlatListRenderViewScreen({ itemData, navigation }) {
    const dispatch = useDispatch();
    const addToCartFun = (item) => {
@@ -28,7 +29,10 @@ function FlatListRenderViewScreen({ itemData, navigation }) {
                <Text style={styles.titleStyle}>{itemData.title}</Text>
                <View style={styles.carBottom}>
 
-                  <Pressable onPress={() => navigation.navigate('ProductDetails', { id: itemData.id })}
+                  <Pressable onPress={() => {
+                     navigation.navigate('ProductDetails', { id: itemData.id })
+                     dispatch(singleProduc({ id: itemData.id }))
+                  }}
                      style={styles.DetailsButton}>
                      <Text style={styles.buttonTitle}>
                         <Icon type="font-awesome-5" name="eye" size={26} color="#fff" />

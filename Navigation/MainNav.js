@@ -29,7 +29,19 @@ function MainNav() {
 
 
             />
-            <Stack.Screen name="ProductDetails" component={ProductDetails} />
+            <Stack.Screen name="ProductDetails" component={ProductDetails}
+
+               options={{
+
+                  title: 'Details',
+                  headerStyle: {
+                     backgroundColor: '#175973',
+
+                  },
+                  headerTintColor: '#fff',
+                  headerShown: false,
+               }}
+            />
             <Stack.Screen name="CartedProduct" component={CartedProduct}
                options={{
                   title: 'Your Cart',
