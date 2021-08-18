@@ -59,8 +59,12 @@ function CartedProduct() {
    }
 
    const orderFun = (allItems, TotalPrice, data) => {
-      const date = new Date().toDateString()
+      const date = new Date().toString()
       dispatch(setOrder({ allItems, TotalPrice, data, date }))
+
+      ToastAndroid.show("Successfully orderd completed", ToastAndroid.TOP)
+
+
    }
    return (
       <ScrollView showsVerticalScrollIndicator={false} style={{ margin: 19 }}>

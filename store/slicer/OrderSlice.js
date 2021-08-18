@@ -6,7 +6,7 @@ import React from 'react';
 const OrderSlice = createSlice({
    name: "order",
    initialState: {
-      order: [],
+      order: []
    },
    reducers: {
       setOrder: (state, action) => {
@@ -16,9 +16,11 @@ const OrderSlice = createSlice({
             totalItem: action.payload.data,
             date: action.payload.date,
          }
-         state.order.push(newObg)
 
-         console.log(state)
+
+         const newArray = state.order.concat(newObg)
+
+         state.order = newArray
       }
    }
 
