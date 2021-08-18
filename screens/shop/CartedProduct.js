@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient';
 import dummyData from '../../dummyData/dummyData'
 import { addToCart, onDelete } from '../../store/slicer/CartSlice'
+import { setOrder } from '../../store/slicer/OrderSlice';
 function CartedProduct() {
    const data = useSelector(state => state.cart.totalItems)
    const TotalPrice = useSelector(state => state.cart.totalAmount)
@@ -57,6 +58,10 @@ function CartedProduct() {
       )
    }
 
+   const orderFun = (allItems, TotalPrice, data) => {
+      const date = new Date().toDateString()
+      dispatch(setOrder({ allItems, TotalPrice, data, date }))
+   }
    return (
       <ScrollView showsVerticalScrollIndicator={false} style={{ margin: 19 }}>
 
@@ -71,7 +76,7 @@ function CartedProduct() {
                   ${TotalPrice.toFixed(2)}
                </Text>
             </View>
-            <Pressable onPress={() => ""}>
+            <Pressable >
                <Button
                   title="Order Now"
                   type="outline"
@@ -85,6 +90,7 @@ function CartedProduct() {
                   titleStyle={{ color: '#fff', }}
                   buttonStyle={{ paddingTop: 7, paddingLeft: 15, paddingBottom: 7, paddingRight: 15, }}
                   activeOpacity={0.9}
+                  onPress={() => orderFun(allItems, TotalPrice, data)}
                />
             </Pressable>
          </View>
