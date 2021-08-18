@@ -1,0 +1,91 @@
+/* eslint-disable prettier/prettier */
+import { useDrawerStatus } from '@react-navigation/drawer'
+import React, { useEffect } from 'react'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import { Icon } from 'react-native-elements'
+
+import { FlatList } from 'react-native-gesture-handler'
+import { useDispatch, useSelector } from 'react-redux'
+
+const OrderHistoryPage = ({ navigation }) => {
+   const OrderedItem = useSelector(state => state.order.order)
+   console.log(OrderedItem);
+   const isDrawerOpen = useDrawerStatus() === 'open';
+   useEffect(() => {
+      navigation.setOptions({
+
+         headerLeft: () => {
+
+            return (<View style={{ marginRight: 15, paddingLeft: 20, }}>
+               {isDrawerOpen ?
+                  <Icon onPress={() => {
+                     navigation.toggleDrawer()
+
+                  }} name='toggle-left' type="font-awesome" color="#fff" size={26} />
+
+                  :
+                  <Icon onPress={() => {
+                     navigation.toggleDrawer()
+
+                  }} name='indent-right' type="antdesign" color="#fff" size={26} />
+
+               }
+            </View>)
+         }
+      })
+   }, [isDrawerOpen, navigation])
+
+   return (
+      <View style={styles.shawodView}>
+         <FlatList data={OrderedItem} renderItem={itemData => (
+            <View style={{ marginBottom: 25, }}>
+               <View style={{ ...styles.itemRenderView, ...{ marginBottom: 20, } }}>
+                  <Text style={{ fontSize: 16, width: "60%", textAlign: 'left' }}>{itemData.item.date}</Text>
+                  <Text style={{ fontSize: 16, width: '40%', textAlign: 'right', fontWeight: 'bold' }}>Total: $ {itemData.item.totalPrice.toFixed(2)}</Text>
+               </View>
+               <View>
+                  {
+                     itemData.item.items.map((itemDetails, index) => (
+                        <View key={index} style={styles.itemRenderView}>
+                           <Text style={{ fontSize: 16, width: "60%", }}>{itemDetails.title}</Text>
+                           <Text
+                              style={{ fontSize: 16, textAlign: 'right', width: "40%" }}
+                           >Price: ${itemDetails.price.toFixed(2)}</Text>
+                        </View>
+                     ))
+                  }
+               </View>
+            </View>
+         )} />
+         <Button title="Download" color="#3EB595" />
+      </View>
+   )
+}
+
+export default OrderHistoryPage
+
+const styles = StyleSheet.create({
+   shawodView: {
+      margin: 15,
+      marginBottom: 20,
+      padding: 15,
+      paddingTop: 20,
+      paddingBottom: 20,
+      minHeight: 200,
+      backgroundColor: '#fff',
+      borderRadius: 6,
+      shadowColor: '#000',
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.37,
+      shadowRadius: 7.49,
+      elevation: 6,
+   },
+   itemRenderView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingBottom: 15,
+   }
+})

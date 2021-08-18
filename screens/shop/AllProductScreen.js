@@ -39,6 +39,8 @@ function AllProductScreen({ navigation }) {
          headerRight: () => (
             <HeaderRightOption navigation={navigation} data={itemLength} />
          ),
+
+
       })
    }, [dispatch, itemLength, navigation])
 

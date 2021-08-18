@@ -5,7 +5,7 @@ import { Button, Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient';
 import dummyData from '../../dummyData/dummyData'
-import { addToCart, onDelete } from '../../store/slicer/CartSlice'
+import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice'
 import { setOrder } from '../../store/slicer/OrderSlice';
 function CartedProduct() {
    const data = useSelector(state => state.cart.totalItems)
@@ -59,8 +59,16 @@ function CartedProduct() {
    }
 
    const orderFun = (allItems, TotalPrice, data) => {
-      const date = new Date().toString()
+      const date = new Date().toLocaleDateString('en-Us', {
+         year: 'numeric',
+         month: 'long',
+         day: 'numeric',
+         hour: '2-digit',
+         minute: '2-digit',
+      })
       dispatch(setOrder({ allItems, TotalPrice, data, date }))
+      dispatch(addedOnCart(null))
+
 
       ToastAndroid.show("Successfully orderd completed", ToastAndroid.TOP)
 
