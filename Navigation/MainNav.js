@@ -11,6 +11,7 @@ import OrderHistoryPage from '../screens/shop/OrderHistoryPage';
 import { Icon } from 'react-native-elements';
 import Registration from '../screens/user/Registration';
 import LoginPage from '../screens/user/LoginPage';
+import ProfillePage from '../screens/user/ProfillePage';
 
 function MainNav({ navigation }) {
    const [toggleCross, setToggleCross] = useState(true)
@@ -110,6 +111,10 @@ const DrawerNav = (params) => {
                      iconName = 'login';
                      type = 'entypo'
 
+                  } else if (route.name === 'Profile') {
+                     iconName = 'user';
+                     type = 'entypo'
+
                   }
 
                   return <Icon name={iconName} type={type} size={25} color={focused ? 'red' : '#FFF'} />;
@@ -190,6 +195,24 @@ const DrawerNav = (params) => {
                   headerTintColor: '#fff',
                   headerShown: false,
                   drawerLabel: 'Login',
+                  drawerLabelStyle: {
+                     fontSize: 16,
+                     fontWeight: 'bold'
+                  },
+               }}
+
+            />
+            <DrawerStack.Screen name="Profile" component={ProfillePage}
+
+               options={{
+
+                  headerStyle: {
+                     backgroundColor: '#175973',
+
+                  },
+                  headerTintColor: '#fff',
+                  headerShown: false,
+                  drawerLabel: 'Profile',
                   drawerLabelStyle: {
                      fontSize: 16,
                      fontWeight: 'bold'
