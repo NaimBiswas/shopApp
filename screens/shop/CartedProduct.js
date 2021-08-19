@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import dummyData from '../../dummyData/dummyData';
 import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice';
 import { setOrder } from '../../store/slicer/OrderSlice';
-function CartedProduct() {
+function CartedProduct({ navigation }) {
    const data = useSelector(state => state.cart.totalItems);
    const TotalPrice = useSelector(state => state.cart.totalAmount);
    const allItems = useSelector(state => state.cart.items);
@@ -21,6 +21,25 @@ function CartedProduct() {
          }}>
             <Text style={{ fontSize: 150, marginTop: '-25%' }}>🤦‍♀️</Text>
             <Text style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', color: 'red', fontStyle: 'italic', lineHeight: 30 }}>You Don't have any product in your basket</Text>
+            <Pressable >
+               <Text style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', color: 'red', fontStyle: 'italic', lineHeight: 30 }}> Go to order page for check your order history</Text>
+               <Button
+                  style={{ width: '100%', alignContent: 'center', alignItems: 'center', marginTop: 20, }}
+                  title="Order History"
+                  type="outline"
+                  ViewComponent={LinearGradient} // Don't forget this!
+                  linearGradientProps={{
+                     colors: ['#110066', '#003F63'],
+                     start: { x: 0, y: 1 },
+                     end: { x: 1, y: 0.5 },
+                  }}
+
+                  titleStyle={{ color: '#fff' }}
+                  buttonStyle={{ paddingTop: 7, paddingLeft: 15, paddingBottom: 7, paddingRight: 15 }}
+                  activeOpacity={0.9}
+                  onPress={() => navigation.navigate("Orders")}
+               />
+            </Pressable>
          </View>
       );
    }
