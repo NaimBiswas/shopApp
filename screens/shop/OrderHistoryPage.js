@@ -72,12 +72,8 @@ export default OrderHistoryPage;
 
 const styles = StyleSheet.create({
    shawodView: {
-      margin: 15,
-      marginBottom: 20,
       padding: 15,
-      paddingTop: 20,
-      paddingBottom: 20,
-
+      marginBottom: 30,
    },
    SeconditemRenderView: {
       flexDirection: 'row',
@@ -95,8 +91,8 @@ const styles = StyleSheet.create({
          width: 0,
          height: 2,
       },
-      shadowOpacity: 0.37,
-      shadowRadius: 7.49,
-      elevation: 6,
+      shadowOpacity: 0.6,
+      shadowRadius: 6,
+      elevation: 4,
    },
 });
