@@ -1,28 +1,28 @@
 /* eslint-disable prettier/prettier */
-import React from 'react'
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, Touchable, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
+import React from 'react';
+import { FlatList, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, Touchable, TouchableHighlight, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import dummyData from '../../dummyData/dummyData'
-import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice'
+import dummyData from '../../dummyData/dummyData';
+import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice';
 import { setOrder } from '../../store/slicer/OrderSlice';
 function CartedProduct() {
-   const data = useSelector(state => state.cart.totalItems)
-   const TotalPrice = useSelector(state => state.cart.totalAmount)
-   const allItems = useSelector(state => state.cart.items)
+   const data = useSelector(state => state.cart.totalItems);
+   const TotalPrice = useSelector(state => state.cart.totalAmount);
+   const allItems = useSelector(state => state.cart.items);
 
-   const dispatch = useDispatch()
+   const dispatch = useDispatch();
 
    if (data === 0) {
       return (
          <View style={{
-            flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#012326'
+            flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#012326',
          }}>
-            <Text style={{ fontSize: 150, marginTop: '-25%', }}>🤦‍♀️</Text>
+            <Text style={{ fontSize: 150, marginTop: '-25%' }}>🤦‍♀️</Text>
             <Text style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', color: 'red', fontStyle: 'italic', lineHeight: 30 }}>You Don't have any product in your basket</Text>
          </View>
-      )
+      );
    }
 
    const renderView = (items) => {
@@ -32,12 +32,12 @@ function CartedProduct() {
             <View>
                <View style={style.flexView}>
                   <Text style={{ width: '70%', fontWeight: '700' }}>Title: {items.item?.title}</Text>
-                  <TouchableOpacity activeOpacity={.7}>
+                  <TouchableOpacity activeOpacity={0.7}>
                      <Text >
                         <Icon onPress={() => {
-                           dispatch(onDelete({ id: items.item.id }))
-                           ToastAndroid.show("Deleted item from cart", ToastAndroid.SHORT)
-                        }} name='delete' type='material-community' color='red' size={35} />
+                           dispatch(onDelete({ id: items.item.id }));
+                           ToastAndroid.show('Deleted item from cart', ToastAndroid.SHORT);
+                        }} name="delete" type="material-community" color="red" size={35} />
                      </Text>
                   </TouchableOpacity>
                </View>
@@ -55,25 +55,27 @@ function CartedProduct() {
 
             </View>
          </View>
-      )
-   }
+      );
+   };
 
    const orderFun = (allItems, TotalPrice, data) => {
-      const date = new Date().toLocaleDateString('en-Us', {
+      const option = {
          year: 'numeric',
          month: 'long',
          day: 'numeric',
          hour: '2-digit',
          minute: '2-digit',
-      })
-      dispatch(setOrder({ allItems, TotalPrice, data, date }))
-      dispatch(addedOnCart(null))
+      }
+      const date = new Date().toLocaleString('en-EN', option)
+      console.log(date);
+      dispatch(setOrder({ allItems, TotalPrice, data, date }));
+      dispatch(addedOnCart(null));
 
 
-      ToastAndroid.show("Successfully orderd completed", ToastAndroid.TOP)
+      ToastAndroid.show('Successfully orderd completed', ToastAndroid.TOP);
 
 
-   }
+   };
    return (
       <ScrollView showsVerticalScrollIndicator={false} style={{ margin: 19 }}>
 
@@ -99,8 +101,8 @@ function CartedProduct() {
                      end: { x: 1, y: 0.5 },
                   }}
 
-                  titleStyle={{ color: '#fff', }}
-                  buttonStyle={{ paddingTop: 7, paddingLeft: 15, paddingBottom: 7, paddingRight: 15, }}
+                  titleStyle={{ color: '#fff' }}
+                  buttonStyle={{ paddingTop: 7, paddingLeft: 15, paddingBottom: 7, paddingRight: 15 }}
                   activeOpacity={0.9}
                   onPress={() => orderFun(allItems, TotalPrice, data)}
                />
@@ -112,7 +114,7 @@ function CartedProduct() {
             <FlatList keyExtractor={(item, index) => index} showsHorizontalScrollIndicator={false} data={allItems} renderItem={renderView} />
          </View>
       </ScrollView>
-   )
+   );
 }
 const style = StyleSheet.create({
    textSyle: {
@@ -137,7 +139,7 @@ const style = StyleSheet.create({
    titleStyleTwo: {
       fontSize: 14,
       fontWeight: 'bold',
-      color: '#003F63'
+      color: '#003F63',
    },
    titleStyle: {
       fontSize: 16,
@@ -161,6 +163,6 @@ const style = StyleSheet.create({
       shadowRadius: 7.49,
       elevation: 8,
       padding: 20,
-   }
-})
-export default CartedProduct
+   },
+});
+export default CartedProduct;

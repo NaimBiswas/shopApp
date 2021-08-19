@@ -1,14 +1,15 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
-import { useDrawerStatus } from '@react-navigation/drawer'
-import React, { useEffect } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { useDrawerStatus } from '@react-navigation/drawer';
+import React, { useEffect } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { Icon } from 'react-native-elements';
 
-import { FlatList } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
+import { FlatList } from 'react-native-gesture-handler';
+import { useDispatch, useSelector } from 'react-redux';
 
 const OrderHistoryPage = ({ navigation }) => {
-   const OrderedItem = useSelector(state => state.order.order)
+   const OrderedItem = useSelector(state => state.order.order);
    console.log(OrderedItem);
    const isDrawerOpen = useDrawerStatus() === 'open';
    useEffect(() => {
@@ -16,53 +17,58 @@ const OrderHistoryPage = ({ navigation }) => {
 
          headerLeft: () => {
 
-            return (<View style={{ marginRight: 15, paddingLeft: 20, }}>
+            return (<View style={{ marginRight: 15, paddingLeft: 20 }}>
                {isDrawerOpen ?
                   <Icon onPress={() => {
-                     navigation.toggleDrawer()
+                     navigation.toggleDrawer();
 
-                  }} name='toggle-left' type="font-awesome" color="#fff" size={26} />
+                  }} name="toggle-left" type="font-awesome" color="#fff" size={26} />
 
                   :
                   <Icon onPress={() => {
-                     navigation.toggleDrawer()
+                     navigation.toggleDrawer();
 
-                  }} name='indent-right' type="antdesign" color="#fff" size={26} />
+                  }} name="indent-right" type="antdesign" color="#fff" size={26} />
 
                }
-            </View>)
-         }
-      })
-   }, [isDrawerOpen, navigation])
+            </View>);
+         },
+      });
+   }, [isDrawerOpen, navigation]);
 
    return (
       <View style={styles.shawodView}>
-         <FlatList data={OrderedItem} renderItem={itemData => (
-            <View style={{ marginBottom: 25, }}>
-               <View style={{ ...styles.itemRenderView, ...{ marginBottom: 20, } }}>
-                  <Text style={{ fontSize: 16, width: "60%", textAlign: 'left' }}>{itemData.item.date}</Text>
+         <FlatList showsVerticalScrollIndicator={false} data={OrderedItem} renderItem={itemData => (
+            <View style={{ ...styles.itemRenderView, ...{ marginBottom: 25 } }}>
+               <View style={{ ...styles.SeconditemRenderView, ...{ paddingTop: 20, paddingBottom: 25, } }}>
+                  <Text style={{ fontSize: 16, width: '60%', textAlign: 'left' }}>{itemData.item.date}</Text>
                   <Text style={{ fontSize: 16, width: '40%', textAlign: 'right', fontWeight: 'bold' }}>Total: $ {itemData.item.totalPrice.toFixed(2)}</Text>
                </View>
-               <View>
+               <View style={{ paddingBottom: 20, }}>
                   {
                      itemData.item.items.map((itemDetails, index) => (
-                        <View key={index} style={styles.itemRenderView}>
-                           <Text style={{ fontSize: 16, width: "60%", }}>{itemDetails.title}</Text>
+                        <View key={index} style={styles.SeconditemRenderView}>
+                           <Text style={{ fontSize: 16, width: '60%' }}>{itemDetails.title}</Text>
                            <Text
-                              style={{ fontSize: 16, textAlign: 'right', width: "40%" }}
+                              style={{ fontSize: 16, textAlign: 'right', width: '40%' }}
                            >Price: ${itemDetails.price.toFixed(2)}</Text>
                         </View>
                      ))
                   }
                </View>
+               {/* <View style={{ paddingBottom: 10, margin: 15, }}>
+
+
+                  
+               </View> */}
             </View>
          )} />
          <Button title="Download" color="#3EB595" />
       </View>
-   )
-}
+   );
+};
 
-export default OrderHistoryPage
+export default OrderHistoryPage;
 
 const styles = StyleSheet.create({
    shawodView: {
@@ -71,7 +77,17 @@ const styles = StyleSheet.create({
       padding: 15,
       paddingTop: 20,
       paddingBottom: 20,
-      minHeight: 200,
+
+   },
+   SeconditemRenderView: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingBottom: 15,
+      marginLeft: 15,
+      marginRight: 15,
+   },
+   itemRenderView: {
+
       backgroundColor: '#fff',
       borderRadius: 6,
       shadowColor: '#000',
@@ -83,9 +99,4 @@ const styles = StyleSheet.create({
       shadowRadius: 7.49,
       elevation: 6,
    },
-   itemRenderView: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingBottom: 15,
-   }
-})
+});
