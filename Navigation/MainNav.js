@@ -9,6 +9,8 @@ import CartedProduct from '../screens/shop/CartedProduct';
 import { createDrawerNavigator, useDrawerStatus } from '@react-navigation/drawer';
 import OrderHistoryPage from '../screens/shop/OrderHistoryPage';
 import { Icon } from 'react-native-elements';
+import Registration from '../screens/user/Registration';
+import LoginPage from '../screens/user/LoginPage';
 
 function MainNav({ navigation }) {
    const [toggleCross, setToggleCross] = useState(true)
@@ -93,14 +95,24 @@ const DrawerNav = (params) => {
 
                drawerIcon: ({ focused, color, size }) => {
                   let iconName;
-
+                  let type;
                   if (route.name === 'Feed') {
                      iconName = 'windows';
+                     type = 'antdesign'
                   } else if (route.name === 'Orders') {
                      iconName = 'printer';
+                     type = 'antdesign'
+                  } else if (route.name === 'Registration') {
+                     iconName = 'add-user';
+                     type = 'entypo'
+
+                  } else if (route.name === 'Login') {
+                     iconName = 'login';
+                     type = 'entypo'
+
                   }
 
-                  return <Icon name={iconName} type="antdesign" size={25} color={focused ? 'red' : '#FFF'} />;
+                  return <Icon name={iconName} type={type} size={25} color={focused ? 'red' : '#FFF'} />;
                },
                drawerStyle: {
                   backgroundColor: '#202731',
@@ -149,6 +161,48 @@ const DrawerNav = (params) => {
                }}
 
             />
+            <DrawerStack.Screen name="Registration" component={Registration}
+
+               options={{
+
+                  headerStyle: {
+                     backgroundColor: '#175973',
+
+                  },
+                  headerTintColor: '#fff',
+                  headerShown: false,
+                  drawerLabel: 'Registration',
+                  drawerLabelStyle: {
+                     fontSize: 16,
+                     fontWeight: 'bold'
+                  },
+               }}
+
+            />
+            <DrawerStack.Screen name="Login" component={LoginPage}
+
+               options={{
+
+                  headerStyle: {
+                     backgroundColor: '#175973',
+
+                  },
+                  headerTintColor: '#fff',
+                  headerShown: false,
+                  drawerLabel: 'Login',
+                  drawerLabelStyle: {
+                     fontSize: 16,
+                     fontWeight: 'bold'
+                  },
+               }}
+
+            />
+
+
+
+
+
+
          </DrawerStack.Navigator>
       </NavigationContainer>
    );

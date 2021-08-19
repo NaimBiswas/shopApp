@@ -1,7 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import { useDrawerStatus } from '@react-navigation/drawer';
+import moment from 'moment';
+import { isMoment } from 'moment';
 import React, { useEffect } from 'react';
+import Moment from 'react-moment';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -10,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const OrderHistoryPage = ({ navigation }) => {
    const OrderedItem = useSelector(state => state.order.order);
-   console.log(OrderedItem);
    const isDrawerOpen = useDrawerStatus() === 'open';
    useEffect(() => {
       navigation.setOptions({
@@ -40,11 +42,23 @@ const OrderHistoryPage = ({ navigation }) => {
       <View style={styles.shawodView}>
          <FlatList showsVerticalScrollIndicator={false} data={OrderedItem} renderItem={itemData => (
             <View style={{ ...styles.itemRenderView, ...{ marginBottom: 25 } }}>
-               <View style={{ ...styles.SeconditemRenderView, ...{ paddingTop: 20, paddingBottom: 25, } }}>
-                  <Text style={{ fontSize: 16, width: '60%', textAlign: 'left' }}>{itemData.item.date}</Text>
+
+               <View style={{ ...styles.SeconditemRenderView, ...{ paddingTop: 20, paddingBottom: 25 } }}>
+
+
+                  <Text style={{ fontSize: 16, width: '60%', textAlign: 'left' }}>
+                     {moment(itemData.item.date).format('DD/MMM/YYYY, hh:mm')}
+                  </Text>
+
+
+
+
+
+
+
                   <Text style={{ fontSize: 16, width: '40%', textAlign: 'right', fontWeight: 'bold' }}>Total: $ {itemData.item.totalPrice.toFixed(2)}</Text>
                </View>
-               <View style={{ paddingBottom: 20, }}>
+               <View style={{ paddingBottom: 20 }}>
                   {
                      itemData.item.items.map((itemDetails, index) => (
                         <View key={index} style={styles.SeconditemRenderView}>
@@ -59,7 +73,7 @@ const OrderHistoryPage = ({ navigation }) => {
                {/* <View style={{ paddingBottom: 10, margin: 15, }}>
 
 
-                  
+
                </View> */}
             </View>
          )} />

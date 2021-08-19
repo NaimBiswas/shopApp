@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import dummyData from '../../dummyData/dummyData';
 import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice';
+import moment from 'moment'
 import { setOrder } from '../../store/slicer/OrderSlice';
 function CartedProduct({ navigation }) {
    const data = useSelector(state => state.cart.totalItems);
@@ -78,15 +79,11 @@ function CartedProduct({ navigation }) {
    };
 
    const orderFun = (allItems, TotalPrice, data) => {
-      const option = {
-         year: 'numeric',
-         month: 'long',
-         day: 'numeric',
-         hour: '2-digit',
-         minute: '2-digit',
-      }
-      const date = new Date().toLocaleString('en-EN', option)
+      const nowTime = Date.now()
+
+      const date = nowTime
       console.log(date);
+
       dispatch(setOrder({ allItems, TotalPrice, data, date }));
       dispatch(addedOnCart(null));
 
