@@ -8,12 +8,26 @@ import 'react-native-gesture-handler';
 
 import { Provider } from 'react-redux'
 import store from './store/store';
+import Toast, { BaseToast } from 'react-native-toast-message';
+
+
+
+
 
 
 function App() {
+
+
+
+
+
+
+
+
    return (
       <Provider store={store}>
          <DrawerNav />
+         <Toast ref={(ref) => Toast.setRef(ref)} />
       </Provider>
    );
 }

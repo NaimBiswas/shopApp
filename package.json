@@ -1,6 +1,6 @@
 {
-  "name": "Shop",
-  "version": "0.0.1",
+  "name": "shop",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -14,6 +14,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.0.5",
     "@reduxjs/toolkit": "^1.6.1",
+    "axios": "^0.21.1",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-moment": "^1.1.1",
@@ -24,6 +25,7 @@
     "react-native-reanimated": "^2.2.0",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.5.0",
+    "react-native-toast-message": "^1.4.9",
     "react-native-vector-icons": "^8.1.0",
     "react-redux": "^7.2.4",
     "redux": "^4.1.1"
@@ -40,5 +42,17 @@
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaimBiswas/shopApp.git"
+  },
+  "author": "Naim Biswas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NaimBiswas/shopApp/issues"
+  },
+  "homepage": "https://github.com/NaimBiswas/shopApp#readme",
+  "description": ""
 }
