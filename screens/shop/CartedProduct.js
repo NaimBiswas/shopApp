@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import dummyData from '../../dummyData/dummyData';
 import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice';
-import moment from 'moment'
+import moment from 'moment';
 import { setOrder } from '../../store/slicer/OrderSlice';
+import Toast from 'react-native-toast-message';
 function CartedProduct({ navigation }) {
    const data = useSelector(state => state.cart.totalItems);
    const TotalPrice = useSelector(state => state.cart.totalAmount);
    const allItems = useSelector(state => state.cart.items);
+   const isLoggedIn = useSelector(state => state.user.loggedIn);
 
    const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ function CartedProduct({ navigation }) {
             <Pressable >
                <Text style={{ fontSize: 22, textAlign: 'center', fontWeight: 'bold', color: 'red', fontStyle: 'italic', lineHeight: 30 }}> Go to order page for check your order history</Text>
                <Button
-                  style={{ width: '100%', alignContent: 'center', alignItems: 'center', marginTop: 20, }}
+                  style={{ width: '100%', alignContent: 'center', alignItems: 'center', marginTop: 20 }}
                   title="Order History"
                   type="outline"
                   ViewComponent={LinearGradient} // Don't forget this!
@@ -38,7 +40,7 @@ function CartedProduct({ navigation }) {
                   titleStyle={{ color: '#fff' }}
                   buttonStyle={{ paddingTop: 7, paddingLeft: 15, paddingBottom: 7, paddingRight: 15 }}
                   activeOpacity={0.9}
-                  onPress={() => navigation.navigate("Orders")}
+                  onPress={() => navigation.navigate('Orders')}
                />
             </Pressable>
          </View>
@@ -79,16 +81,32 @@ function CartedProduct({ navigation }) {
    };
 
    const orderFun = (allItems, TotalPrice, data) => {
-      const nowTime = Date.now()
+      const nowTime = Date.now();
 
-      const date = nowTime
+      const date = nowTime;
       console.log(date);
 
-      dispatch(setOrder({ allItems, TotalPrice, data, date }));
-      dispatch(addedOnCart(null));
+      if (isLoggedIn) {
+         dispatch(setOrder({ allItems, TotalPrice, data, date }));
+         dispatch(addedOnCart(null));
+
+         ToastAndroid.show('Successfully orderd completed', ToastAndroid.TOP);
+      } else {
+         Toast.show({
+            type: 'error',
+            autoHide: true,
+            text1: 'Please Login',
+            text2: 'For order you have to login first',
+         });
+         navigation.navigate('Login');
+      }
 
 
-      ToastAndroid.show('Successfully orderd completed', ToastAndroid.TOP);
+
+
+
+
+
 
 
    };
