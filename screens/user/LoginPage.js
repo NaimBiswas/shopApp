@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import { Dimensions, Image, ImageBackground, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
+import { setLogedIn } from '../../store/slicer/UserSlicer';
 
 const LoginPage = ({ navigation }) => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
-
+   const dispatch = useDispatch()
 
 
    const loginFun = (email, password) => {
@@ -33,6 +35,7 @@ const LoginPage = ({ navigation }) => {
                   text2: 'Thanks for being with us!',
                });
                navigation.navigate('Feed');
+               dispatch(setLogedIn())
             } else {
                Toast.show({
                   type: 'error',

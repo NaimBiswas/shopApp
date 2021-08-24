@@ -12,11 +12,15 @@ import { Icon } from 'react-native-elements';
 import Registration from '../screens/user/Registration';
 import LoginPage from '../screens/user/LoginPage';
 import ProfillePage from '../screens/user/ProfillePage';
+import { useSelector } from 'react-redux';
+import { color } from 'react-native-reanimated';
 
 function MainNav({ navigation }) {
    const [toggleCross, setToggleCross] = useState(true)
    const Stack = createNativeStackNavigator();
    const isDrawerOpen = useDrawerStatus() === 'open';
+
+
 
    return (
 
@@ -88,7 +92,11 @@ function MainNav({ navigation }) {
    );
 }
 const DrawerStack = createDrawerNavigator();
+
 const DrawerNav = (params) => {
+
+   const isLoggedIn = useSelector(state => state.user.loggedIn)
+
    return (
       <NavigationContainer>
          <DrawerStack.Navigator
@@ -109,6 +117,10 @@ const DrawerNav = (params) => {
 
                   } else if (route.name === 'Login') {
                      iconName = 'login';
+                     type = 'entypo'
+
+                  } else if (route.name === 'LogOut') {
+                     iconName = 'log-out';
                      type = 'entypo'
 
                   } else if (route.name === 'Profile') {
@@ -166,60 +178,100 @@ const DrawerNav = (params) => {
                }}
 
             />
-            <DrawerStack.Screen name="Registration" component={Registration}
+            {
+               !isLoggedIn ?
+                  <>
 
-               options={{
 
-                  headerStyle: {
-                     backgroundColor: '#175973',
 
-                  },
-                  headerTintColor: '#fff',
-                  headerShown: false,
-                  drawerLabel: 'Registration',
-                  drawerLabelStyle: {
-                     fontSize: 16,
-                     fontWeight: 'bold'
-                  },
-               }}
+                     <DrawerStack.Screen name="Registration" component={Registration}
 
-            />
-            <DrawerStack.Screen name="Login" component={LoginPage}
+                        options={{
 
-               options={{
+                           headerStyle: {
+                              backgroundColor: '#175973',
 
-                  headerStyle: {
-                     backgroundColor: '#175973',
+                           },
+                           headerTintColor: '#fff',
+                           headerShown: false,
+                           drawerLabel: 'Registration',
+                           drawerLabelStyle: {
+                              fontSize: 16,
+                              fontWeight: 'bold'
+                           },
+                        }}
 
-                  },
-                  headerTintColor: '#fff',
-                  headerShown: false,
-                  drawerLabel: 'Login',
-                  drawerLabelStyle: {
-                     fontSize: 16,
-                     fontWeight: 'bold'
-                  },
-               }}
+                     />
+                     <DrawerStack.Screen name="Login" component={LoginPage}
 
-            />
-            <DrawerStack.Screen name="Profile" component={ProfillePage}
+                        options={{
 
-               options={{
+                           headerStyle: {
+                              backgroundColor: '#175973',
 
-                  headerStyle: {
-                     backgroundColor: '#175973',
+                           },
+                           headerTintColor: '#fff',
+                           headerShown: false,
+                           drawerLabel: 'Login',
+                           drawerLabelStyle: {
+                              fontSize: 16,
+                              fontWeight: 'bold'
+                           },
+                        }}
 
-                  },
-                  headerTintColor: '#fff',
-                  headerShown: false,
-                  drawerLabel: 'Profile',
-                  drawerLabelStyle: {
-                     fontSize: 16,
-                     fontWeight: 'bold'
-                  },
-               }}
+                     />
 
-            />
+                  </>
+
+                  :
+                  <>
+                     <DrawerStack.Screen name="Profile" component={ProfillePage}
+
+                        options={{
+
+                           headerStyle: {
+                              backgroundColor: '#175973',
+
+                           },
+                           headerTintColor: '#fff',
+                           headerShown: true,
+                           drawerLabel: 'Profile',
+                           drawerLabelStyle: {
+                              fontSize: 16,
+                              fontWeight: 'bold'
+                           },
+                        }}
+
+                     />
+
+                     <DrawerStack.Screen name="LogOut" component={ProductDetails}
+
+                        options={{
+
+                           headerStyle: {
+                              backgroundColor: '#175973',
+
+                           },
+
+                           headerTintColor: '#000',
+                           headerShown: false,
+                           drawerLabel: 'Log Out',
+                           drawerLabelStyle: {
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                           },
+
+                        }}
+
+                     />
+
+                  </>
+            }
+
+
+
+
+
 
 
 
