@@ -59,7 +59,7 @@ const Registration = ({ navigation }) => {
             }}
          >
 
-            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20%' }}>
+            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
                <Image source={{ uri: 'https://www.pngkit.com/png/full/395-3951545_shopping-shop-icon-white-png.png' }} style={{ height: 90, width: 90, resizeMode: 'contain', alignItems: 'center' }} />
             </View>
 
