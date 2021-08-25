@@ -13,10 +13,9 @@ import Registration from '../screens/user/Registration';
 import LoginPage from '../screens/user/LoginPage';
 import ProfillePage from '../screens/user/ProfillePage';
 import { useSelector } from 'react-redux';
-import { color } from 'react-native-reanimated';
+
 
 function MainNav({ navigation }) {
-   const [toggleCross, setToggleCross] = useState(true)
    const Stack = createNativeStackNavigator();
    const isDrawerOpen = useDrawerStatus() === 'open';
 
@@ -31,33 +30,29 @@ function MainNav({ navigation }) {
             options={{
 
                title: 'All Products',
-               headerLargeStyle: {
-               },
                headerStyle: {
                   backgroundColor: '#175973',
-
                },
                headerTintColor: '#fff',
-
                headerLeft: () => {
 
-                  return (<View style={{ marginRight: 15, }}>
+                  return (<View style={{ marginRight: 15 }}>
                      {isDrawerOpen ?
                         <Icon onPress={() => {
-                           navigation.toggleDrawer()
+                           navigation.toggleDrawer();
 
-                        }} name='toggle-left' type="font-awesome" color="#fff" size={26} />
+                        }} name="toggle-left" type="font-awesome" color="#fff" size={26} />
 
                         :
                         <Icon onPress={() => {
-                           navigation.toggleDrawer()
+                           navigation.toggleDrawer();
 
-                        }} name='indent-right' type="antdesign" color="#fff" size={26} />
+                        }} name="indent-right" type="antdesign" color="#fff" size={26} />
 
                      }
 
-                  </View>)
-               }
+                  </View>);
+               },
             }}
 
 
@@ -95,11 +90,12 @@ const DrawerStack = createDrawerNavigator();
 
 const DrawerNav = (params) => {
 
-   const isLoggedIn = useSelector(state => state.user.loggedIn)
+   const isLoggedIn = useSelector(state => state.user.loggedIn);
 
    return (
       <NavigationContainer>
          <DrawerStack.Navigator
+            initialRouteName="Feed"
             screenOptions={({ route }) => ({
 
                drawerIcon: ({ focused, color, size }) => {
@@ -107,25 +103,25 @@ const DrawerNav = (params) => {
                   let type;
                   if (route.name === 'Feed') {
                      iconName = 'windows';
-                     type = 'antdesign'
+                     type = 'antdesign';
                   } else if (route.name === 'Orders') {
                      iconName = 'printer';
-                     type = 'antdesign'
+                     type = 'antdesign';
                   } else if (route.name === 'Registration') {
                      iconName = 'add-user';
-                     type = 'entypo'
+                     type = 'entypo';
 
                   } else if (route.name === 'Login') {
                      iconName = 'login';
-                     type = 'entypo'
+                     type = 'entypo';
 
                   } else if (route.name === 'LogOut') {
                      iconName = 'log-out';
-                     type = 'entypo'
+                     type = 'entypo';
 
                   } else if (route.name === 'Profile') {
                      iconName = 'user';
-                     type = 'entypo'
+                     type = 'entypo';
 
                   }
 
@@ -151,7 +147,7 @@ const DrawerNav = (params) => {
                drawerLabel: 'Feed',
                drawerLabelStyle: {
                   fontSize: 16,
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
                },
 
 
@@ -171,9 +167,9 @@ const DrawerNav = (params) => {
                   drawerLabel: 'Order History',
                   drawerLabelStyle: {
                      fontSize: 16,
-                     fontWeight: 'bold'
+                     fontWeight: 'bold',
                   },
-                  title: "Your Order History",
+                  title: 'Your Order History',
 
                }}
 
@@ -197,7 +193,7 @@ const DrawerNav = (params) => {
                            drawerLabel: 'Registration',
                            drawerLabelStyle: {
                               fontSize: 16,
-                              fontWeight: 'bold'
+                              fontWeight: 'bold',
                            },
                         }}
 
@@ -215,7 +211,7 @@ const DrawerNav = (params) => {
                            drawerLabel: 'Login',
                            drawerLabelStyle: {
                               fontSize: 16,
-                              fontWeight: 'bold'
+                              fontWeight: 'bold',
                            },
                         }}
 
@@ -238,7 +234,7 @@ const DrawerNav = (params) => {
                            drawerLabel: 'Profile',
                            drawerLabelStyle: {
                               fontSize: 16,
-                              fontWeight: 'bold'
+                              fontWeight: 'bold',
                            },
                         }}
 

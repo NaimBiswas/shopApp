@@ -35,7 +35,8 @@ const LoginPage = ({ navigation }) => {
                   text2: 'Thanks for being with us!',
                });
                navigation.navigate('Feed');
-               dispatch(setLogedIn())
+               console.log(result);
+               dispatch(setLogedIn(result.data._id))
             } else {
                Toast.show({
                   type: 'error',

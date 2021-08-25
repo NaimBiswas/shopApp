@@ -7,10 +7,13 @@ const UserSlicer = createSlice({
 
    initialState: {
       loggedIn: false,
+      userId: '',
    },
    reducers: {
       setLogedIn: (state, action) => {
          state.loggedIn = true
+         state.userId = action.payload
+
          console.log(state);
       }
    },

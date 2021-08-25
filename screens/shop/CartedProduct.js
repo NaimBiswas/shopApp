@@ -4,9 +4,9 @@ import { FlatList, Pressable, ScrollView, StyleSheet, Text, ToastAndroid, Toucha
 import { Button, Icon } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import dummyData from '../../dummyData/dummyData';
-import { addedOnCart, addToCart, onDelete } from '../../store/slicer/CartSlice';
-import moment from 'moment';
+
+import { addedOnCart, onDelete } from '../../store/slicer/CartSlice';
+
 import { setOrder } from '../../store/slicer/OrderSlice';
 import Toast from 'react-native-toast-message';
 function CartedProduct({ navigation }) {
@@ -100,14 +100,6 @@ function CartedProduct({ navigation }) {
          });
          navigation.navigate('Login');
       }
-
-
-
-
-
-
-
-
 
    };
    return (
