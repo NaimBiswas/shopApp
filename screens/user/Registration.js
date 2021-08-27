@@ -116,7 +116,7 @@ const Registration = ({ navigation }) => {
                      !isLoading ?
                         <Text style={styles.registerButton} >Registration</Text>
                         :
-                        <ActivityIndicator size='large' color={'red'} style={styles.registerButton} />
+                        <ActivityIndicator animating={true} size='large' color={'red'} style={styles.registerButton} />
                   }
 
                </Pressable>

@@ -5,18 +5,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import FlatListRenderViewScreen from '../../components/FlatListRenderViewScreen'
 import HeaderRightOption from '../../components/HeaderRightOption'
 import StatusBarStyle from '../../components/StatusBarStyle'
-import dummyProduct from '../../dummyData/dummyData'
+
 import { setProduct } from '../../store/slicer/ProductSlice'
 function AllProductScreen({ navigation }) {
    const [refreshing, setRefreshing] = useState(false);
-   const [listData, setListData] = useState(dummyProduct);
-
+   const AllProduct = useSelector(state => state.product.products)
+   const [listData, setListData] = useState(AllProduct);
    const itemLength = useSelector(state => state.cart.totalItems)
+
    const onRefresh = useCallback(async () => {
       setRefreshing(true);
       if (listData.length > 10) {
          try {
-            setListData(dummyProduct.concat(dummyProduct));
+            setListData(AllProduct.concat(AllProduct));
             setRefreshing(false)
          } catch (error) {
             console.error("Hello " + error);
@@ -28,7 +29,7 @@ function AllProductScreen({ navigation }) {
 
 
    },
-      [listData.length],
+      [AllProduct, listData.length],
    )
    const dispatch = useDispatch()
 
@@ -44,7 +45,7 @@ function AllProductScreen({ navigation }) {
       })
    }, [dispatch, itemLength, navigation])
 
-   const AllProduct = useSelector(state => state.product.products)
+
    return (
       <View>
          <StatusBarStyle />
