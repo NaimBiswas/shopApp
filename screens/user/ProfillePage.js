@@ -114,7 +114,7 @@ const ProfillePage = ({ navigation }) => {
                <View style={styles.productContainerTop} >
                   <Text style={styles.productHeaderTitle} >All Prodcut</Text>
                   <Text onPress={() => {
-                     Alert.alert('It will come soom', 'Thanks for being with us');
+                     navigation.navigate("NewProduct")
                   }} style={styles.newProductTitle} >Add New Product</Text>
                </View>
             </View>

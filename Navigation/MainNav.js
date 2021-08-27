@@ -13,6 +13,7 @@ import Registration from '../screens/user/Registration';
 import LoginPage from '../screens/user/LoginPage';
 import ProfillePage from '../screens/user/ProfillePage';
 import { useSelector } from 'react-redux';
+import AddNewProdcut from '../screens/products/AddNewProdcut';
 
 
 function MainNav({ navigation }) {
@@ -80,6 +81,21 @@ function MainNav({ navigation }) {
             }}
 
          />
+
+
+         <Stack.Screen name="NewProduct" component={AddNewProdcut}
+            options={{
+               title: 'Add New Product',
+               headerStyle: {
+                  backgroundColor: '#175973',
+               },
+               headerTintColor: '#fff',
+            }}
+
+         />
+
+
+
       </Stack.Navigator>
 
 
@@ -177,9 +193,6 @@ const DrawerNav = (params) => {
             {
                !isLoggedIn ?
                   <>
-
-
-
                      <DrawerStack.Screen name="Registration" component={Registration}
 
                         options={{
