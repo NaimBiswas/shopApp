@@ -111,9 +111,7 @@ const LoginPage = ({ navigation }) => {
                   onPress={() => { loginFun(email, password); }}
                   style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
                   {isLoading ?
-
-
-                     <Text style={styles.registerButton} ><ActivityIndicator size="large" color="pink" /> </Text>
+                     <Text style={styles.loadingStyle} ><ActivityIndicator size="large" color="#D90B1C" /> </Text>
                      :
                      <Text style={styles.registerButton} >Log In</Text>
                   }
@@ -129,6 +127,14 @@ const LoginPage = ({ navigation }) => {
 export default LoginPage;
 
 const styles = StyleSheet.create({
+   loadingStyle: {
+      padding: 20,
+      backgroundColor: '#012840',
+
+      letterSpacing: 2,
+      borderRadius: 10,
+
+   },
    registerButton: {
       padding: 20,
       backgroundColor: '#012840',
