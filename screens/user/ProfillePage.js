@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View, Alert, RefreshControlBase, RefreshControl } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View, Alert, RefreshControlBase, RefreshControl, FlatList } from 'react-native';
 import { Image } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
+import UserProductFlatList from '../../components/userCom/UserProductFlatList';
 
 const ProfillePage = ({ navigation }) => {
    const [userData, setUserData] = useState(Object);
+   const [userProduct, setUserProduct] = useState(null);
    const userId = useSelector(state => state.user.userId);
    const [refreshing, setRefreshing] = useState(false);
 
@@ -24,6 +26,7 @@ const ProfillePage = ({ navigation }) => {
          .then((result) => {
             if (result.succ === true) {
                setUserData(result.data);
+               setUserProduct(result.product);
             }
          }).catch(err => {
             console.log(err);
@@ -35,8 +38,7 @@ const ProfillePage = ({ navigation }) => {
             });
          });
 
-   }, [userId])
-
+   }, [userId]);
 
 
 
@@ -45,7 +47,7 @@ const ProfillePage = ({ navigation }) => {
 
 
    const onRefresh = () => {
-      setRefreshing(true)
+      setRefreshing(true);
       fetch('https://shop-bc.herokuapp.com/api/profile', {
          method: 'GET',
          headers: {
@@ -56,10 +58,12 @@ const ProfillePage = ({ navigation }) => {
          },
       }).then(res => res.json())
          .then((result) => {
+
             if (result.succ === true) {
-               setUserData(result.data)
+               setUserData(result.data);
+               setUserProduct(result.product);
             }
-            setRefreshing(false)
+            setRefreshing(false);
          }).catch(err => {
             console.log(err);
             Toast.show({
@@ -68,15 +72,15 @@ const ProfillePage = ({ navigation }) => {
                text1: 'Something went wrong',
                text2: 'Try again later',
             });
-            setRefreshing(false)
+            setRefreshing(false);
          });
-   }
+   };
 
 
 
    return (
       <ScrollView showsHorizontalScrollIndicator={false}
-
+         nestedScrollEnabled={true}
          refreshControl={
             <RefreshControl
                onRefresh={onRefresh}
@@ -114,9 +118,18 @@ const ProfillePage = ({ navigation }) => {
                <View style={styles.productContainerTop} >
                   <Text style={styles.productHeaderTitle} >All Prodcut</Text>
                   <Text onPress={() => {
-                     navigation.navigate("NewProduct")
+                     navigation.navigate('NewProduct');
                   }} style={styles.newProductTitle} >Add New Product</Text>
                </View>
+
+               <FlatList
+                  keyExtractor={(item, index) => item._id}
+                  horizontal={true}
+                  data={userProduct}
+                  renderItem={itemData =>
+                     <UserProductFlatList data={itemData.item} />
+                  } />
+
             </View>
          </View>
 
@@ -205,5 +218,6 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'center',
       minHeight: Dimensions.get('window').height,
+      marginBottom: 40,
    },
 });
