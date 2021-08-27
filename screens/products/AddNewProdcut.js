@@ -1,25 +1,67 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Button } from 'react-native'
-import { Icon } from 'react-native-elements'
-import StatusBarStyle from '../../components/StatusBarStyle'
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Dimensions, TextInput, KeyboardAvoidingView, Button, ActivityIndicator } from 'react-native';
+import { Icon } from 'react-native-elements';
+import Toast from 'react-native-toast-message';
+import { useSelector } from 'react-redux';
+import StatusBarStyle from '../../components/StatusBarStyle';
 
 const AddNewProdcut = ({ navigation }) => {
+   const [title, setTitle] = useState('');
+   const [price, setPrice] = useState('');
+   const [imageURL, setImageURL] = useState('');
+   const [description, setDescription] = useState('');
+   const [isLoading, setIsLoading] = useState(false)
+   const userId = useSelector(state => state.user.userId);
 
-   useEffect(() => {
-      navigation.setOptions({
+   const onSubmit = () => {
+      setIsLoading(true)
+      fetch('https://shop-bc.herokuapp.com/api/add-product', {
+         method: 'POST',
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'id': userId,
+         },
+         body: JSON.stringify({
+            title: title,
+            price: price,
+            imageURL: imageURL,
+            description: description,
+         }),
+      }).then(res => res.json())
+         .then((result) => {
+            setIsLoading(false)
+            if (result.succ === true) {
+               Toast.show({
+                  type: 'success',
+                  position: 'top',
+                  text1: result.message,
+               });
+               setTitle('');
+               setPrice('');
+               setDescription('');
+               setImageURL('')
+            } else {
+               Toast.show({
+                  type: 'error',
+                  position: 'top',
+                  text1: result.message,
+                  text2: 'Those are required!',
+               });
+            }
+         }).catch((err) => {
+            setIsLoading(false)
+            Toast.show({
+               type: 'error',
+               position: 'top',
+               text1: err,
+            });
+         });
 
-         // headerLeft: () => (
-         //    <View>
-         //       <Text
-         //          style={{ paddingRight: 20 }}
-         //       ><Icon type="antdesign" name="arrowleft" color="#fff" size={30} /></Text>
-         //    </View>
-         // ),
+   };
 
-
-      })
-   }, [navigation])
    return (
       <ScrollView>
          <StatusBarStyle />
@@ -28,31 +70,43 @@ const AddNewProdcut = ({ navigation }) => {
                <View style={styles.shadowContainer}>
                   <View>
                      <Text style={styles.inputTitle}>Title</Text>
-                     <TextInput style={styles.inputStyle} />
+                     <TextInput value={title} onChangeText={setTitle} style={styles.inputStyle} />
                   </View>
                   <View>
                      <Text style={styles.inputTitle} >Price</Text>
-                     <TextInput keyboardType={'number-pad'} style={styles.inputStyle} />
+                     <TextInput value={price} onChangeText={setPrice} keyboardType={'number-pad'} style={styles.inputStyle} />
                   </View>
                   <View>
                      <Text style={styles.inputTitle} >Image URL</Text>
-                     <TextInput keyboardType={'url'} style={styles.inputStyle} />
+                     <TextInput value={imageURL} onChangeText={setImageURL} keyboardType={'url'} style={styles.inputStyle} />
                   </View>
                   <View>
                      <Text style={styles.inputTitle} >Description</Text>
-                     <TextInput keyboardType={'decimal-pad'} style={styles.inputStyle} />
+                     <TextInput
+                        value={description} onChangeText={setDescription}
+                        style={styles.inputStyle} />
                   </View>
                </View>
-               <View style={{ padding: 20, }}>
-                  <Button title="Submit" color="#3EB595" onPress={() => { }} />
+               <View style={{ padding: 20 }}>
+                  {
+                     isLoading ?
+
+                        <ActivityIndicator
+                           style={{ backgroundColor: '#76777B', }}
+                           size='large' color="#EDCA4D" animating={true} />
+
+
+                        :
+                        <Button title="Submit" color="#3EB595" onPress={onSubmit} />
+                  }
                </View>
             </View>
          </KeyboardAvoidingView>
       </ScrollView>
-   )
-}
+   );
+};
 
-export default AddNewProdcut
+export default AddNewProdcut;
 
 const styles = StyleSheet.create({
    inputStyle: {
@@ -72,7 +126,7 @@ const styles = StyleSheet.create({
    },
    shadowContainer: {
       padding: 20,
-      shadowColor: "#000",
+      shadowColor: '#000',
       shadowOffset: {
          width: 0,
          height: 4,
@@ -91,4 +145,4 @@ const styles = StyleSheet.create({
       width: '100%',
 
    },
-})
+});
