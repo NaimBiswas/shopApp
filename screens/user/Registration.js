@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { Dimensions, Image, ImageBackground, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, ImageBackground, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 
@@ -10,9 +10,11 @@ const Registration = ({ navigation }) => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [confirmPassword, setConfirmPassword] = useState('');
+   const [isLoading, setIsLoading] = useState(false);
+
 
    const registrationFun = (name, email, password, confirmPassword) => {
-
+      setIsLoading(true)
       fetch('https://shop-bc.herokuapp.com/api/registration', {
          method: 'POST',
          headers: {
@@ -33,22 +35,29 @@ const Registration = ({ navigation }) => {
                   type: 'success',
                   autoHide: true,
                   text1: result?.message,
-                  text2: "Please login for continue",
+                  text2: 'Please login for continue',
                });
-               navigation.navigate("Login")
+               setIsLoading(false);
+               navigation.navigate('Login');
             } else {
-
                Toast.show({
                   type: 'error',
                   autoHide: true,
                   text1: result?.message,
                   text2: result?.messageTwo ? result?.messageTwo : result?.data.email,
                });
+               setIsLoading(false)
+
             }
          }).catch(err => {
-            console.error(err + "hello")
+            console.error(err + 'hello');
          });
    };
+
+
+
+
+
 
    return (
       <ScrollView onPress={Keyboard.dismiss}  >
@@ -97,11 +106,19 @@ const Registration = ({ navigation }) => {
                </View>
 
                <Pressable
-                  onPress={() =>
-                     registrationFun(name, email, password, confirmPassword)
+                  onPress={() => {
+
+                     registrationFun(name, email, password, confirmPassword);
+                  }
                   }
                   style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
-                  <Text style={styles.registerButton} >Registration</Text>
+                  {
+                     !isLoading ?
+                        <Text style={styles.registerButton} >Registration</Text>
+                        :
+                        <ActivityIndicator size='large' color={'red'} style={styles.registerButton} />
+                  }
+
                </Pressable>
             </View>
 

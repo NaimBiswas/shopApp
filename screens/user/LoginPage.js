@@ -1,7 +1,7 @@
 /* eslint-disable handle-callback-err */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { Dimensions, Image, ImageBackground, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ActivityIndicator, Dimensions, Image, ImageBackground, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { setLogedIn } from '../../store/slicer/UserSlicer';
@@ -9,11 +9,12 @@ import { setLogedIn } from '../../store/slicer/UserSlicer';
 const LoginPage = ({ navigation }) => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
+   const [isLoading, setIsLoading] = useState(false)
    const dispatch = useDispatch()
 
 
    const loginFun = (email, password) => {
-
+      setIsLoading(true)
       fetch('https://shop-bc.herokuapp.com/api/login', {
          method: 'POST',
          headers: {
@@ -34,6 +35,7 @@ const LoginPage = ({ navigation }) => {
                   text1: result?.message,
                   text2: 'Thanks for being with us!',
                });
+               setIsLoading(false)
                navigation.navigate('Feed');
                console.log(result);
                dispatch(setLogedIn(result.data._id))
@@ -44,6 +46,7 @@ const LoginPage = ({ navigation }) => {
                   text1: result?.message,
                   text2: result?.messageTwo ? result?.messageTwo : 'Please create a account & continue',
                });
+               setIsLoading(false)
             }
          }).catch(err => {
             console.log(err);
@@ -53,6 +56,7 @@ const LoginPage = ({ navigation }) => {
                text1: 'Something went wrong',
                text2: 'Try again later',
             });
+            setIsLoading(false)
          });
    };
 
@@ -106,7 +110,13 @@ const LoginPage = ({ navigation }) => {
                <Pressable
                   onPress={() => { loginFun(email, password); }}
                   style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '10%' }}>
-                  <Text style={styles.registerButton} >Log In</Text>
+                  {isLoading ?
+
+
+                     <Text style={styles.registerButton} ><ActivityIndicator size="large" color="pink" /> </Text>
+                     :
+                     <Text style={styles.registerButton} >Log In</Text>
+                  }
                </Pressable>
             </View>
 
