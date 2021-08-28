@@ -1,19 +1,21 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { AsyncStorage, Button, Dimensions, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AllProductScreen from '../screens/shop/AllProductScreen';
 import ProductDetails from '../screens/shop/ProductDetailsScreen';
 import CartedProduct from '../screens/shop/CartedProduct';
-import { createDrawerNavigator, useDrawerStatus } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList, useDrawerStatus } from '@react-navigation/drawer';
 import OrderHistoryPage from '../screens/shop/OrderHistoryPage';
 import { Icon } from 'react-native-elements';
 import Registration from '../screens/user/Registration';
 import LoginPage from '../screens/user/LoginPage';
 import ProfillePage from '../screens/user/ProfillePage';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddNewProdcut from '../screens/products/AddNewProdcut';
+import { setLogOut } from '../store/slicer/UserSlicer';
 
 
 function MainNav({ navigation }) {
@@ -108,9 +110,50 @@ const DrawerNav = (params) => {
 
    const isLoggedIn = useSelector(state => state.user.loggedIn);
 
+   function CustomDrawerContent(props) {
+      const dispatch = useDispatch();
+
+      return (
+         <>
+            {
+               isLoggedIn ?
+
+                  <DrawerContentScrollView {...props}>
+                     <DrawerItemList {...props} />
+                     <View
+                        style={{ margin: 20 }}
+                     >
+                        <Button title="Log Out" color="#FF0005" onPress={() => {
+                           AsyncStorage.removeItem('userData');
+                           dispatch(setLogOut(null));
+
+                        }} />
+                     </View>
+
+                  </DrawerContentScrollView >
+                  :
+                  <DrawerContentScrollView {...props}>
+                     <DrawerItemList {...props} />
+                  </DrawerContentScrollView >
+            }
+
+         </>
+
+
+
+      );
+   }
+
+
+
+
    return (
       <NavigationContainer>
          <DrawerStack.Navigator
+
+            drawerContent={(props) => <CustomDrawerContent {...props} />}
+
+
             initialRouteName="Feed"
             screenOptions={({ route }) => ({
 
@@ -146,6 +189,7 @@ const DrawerNav = (params) => {
                drawerStyle: {
                   backgroundColor: '#202731',
                   paddingTop: 10,
+                  minHeight: Dimensions.get('window').height,
 
                },
                drawerActiveBackgroundColor: 'yellow',
@@ -253,7 +297,7 @@ const DrawerNav = (params) => {
 
                      />
 
-                     <DrawerStack.Screen name="LogOut" component={ProductDetails}
+                     {/* <DrawerStack.Screen name="LogOut" component={ProductDetails}
 
                         options={{
 
@@ -272,7 +316,7 @@ const DrawerNav = (params) => {
 
                         }}
 
-                     />
+                     /> */}
 
                   </>
             }

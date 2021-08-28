@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View, Alert, RefreshControlBase, RefreshControl, FlatList, ActivityIndicator } from 'react-native';

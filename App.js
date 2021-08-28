@@ -16,7 +16,8 @@ import SplashScreen from './screens/SplashScreen';
 
 
 
-function App({ navigation }) {
+function App() {
+
    const [ShowSplashScreen, setShowSplashScreen] = useState(false)
    // useEffect(() => {
    //    setTimeout(() => {
@@ -36,7 +37,7 @@ function App({ navigation }) {
             ShowSplashScreen ?
                <DrawerNav />
                :
-               <SplashScreen navigation={navigation} setShowSplashScreen={setShowSplashScreen} />
+               <SplashScreen setShowSplashScreen={setShowSplashScreen} />
          }
          <Toast ref={(ref) => Toast.setRef(ref)} />
       </Provider>

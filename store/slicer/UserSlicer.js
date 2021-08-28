@@ -11,10 +11,14 @@ const UserSlicer = createSlice({
    },
    reducers: {
       setLogedIn: (state, action) => {
-         state.loggedIn = true
-         state.userId = action.payload
-      }
+         state.loggedIn = true;
+         state.userId = action.payload;
+      },
+      setLogOut: (state, action) => {
+         state.loggedIn = false;
+         state.userId = '';
+      },
    },
 });
-export const { setLogedIn } = UserSlicer.actions;
+export const { setLogedIn, setLogOut } = UserSlicer.actions;
 export default UserSlicer.reducer;

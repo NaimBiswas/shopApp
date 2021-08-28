@@ -81,14 +81,14 @@ const LoginPage = ({ navigation }) => {
       <ScrollView onPress={Keyboard.dismiss}  >
          <ImageBackground source={require('../../assets/image/bgOne.jpg')}
             style={{
-               minHeight: Dimensions.get('window').height,
                width: '100%',
                height: '100%',
+               minHeight: Dimensions.get('window').height
             }}
          >
 
-            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '26%' }}>
-               <Image source={require('../../assets/image/logo.png')} style={{ height: 100, width: 100, resizeMode: 'contain', alignItems: 'center' }} />
+            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: 40, }}>
+               <Image source={require('../../assets/image/logo.png')} style={{ height: 100, width: 100, }} />
             </View>
 
             <View style={styles.inputContainer}>
@@ -147,13 +147,16 @@ const styles = StyleSheet.create({
       fontSize: 15,
       letterSpacing: 2,
       borderRadius: 10,
+      marginBottom: 40,
    },
    inputStyle: {
       borderBottomColor: '#fff',
       borderBottomWidth: 1,
-      marginBottom: 20,
+      marginBottom: 25,
       color: '#fff',
       fontSize: 16,
+      paddingTop: -10,
+
    },
    inputContainer: {
       margin: 20,

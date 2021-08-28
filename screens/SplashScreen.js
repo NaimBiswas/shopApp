@@ -1,22 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, Image, ImageBackground, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { setLogedIn } from '../store/slicer/UserSlicer';
 
-const SplashScreen = ({ navigation, setShowSplashScreen }) => {
+const SplashScreen = (props) => {
+   console.log(props.naviation)
    const dispatch = useDispatch();
    AsyncStorage.getItem('userData')
       .then(res => JSON.parse(res))
       .then((result) => {
-
          if (result) {
-
-            console.log(result.userId);
             dispatch(setLogedIn(result.userId));
-            setShowSplashScreen(true);
+            props.setShowSplashScreen(true);
             Toast.show({
                type: 'success',
                position: 'top',
@@ -25,13 +23,14 @@ const SplashScreen = ({ navigation, setShowSplashScreen }) => {
                autoHide: true,
             });
          } else {
-            navigation.navigate('Login');
+            props.setShowSplashScreen(true);
          }
       }).catch((err) => {
          console.log(err);
       });
    return (
       <View>
+         <StatusBar hidden={true} />
          <ImageBackground source={require('../assets/image/bgSplashTwo.jpg')} style={{ height: '100%', width: '100%' }}>
             <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100%', marginTop: -50 }}>
                <Image
