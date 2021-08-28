@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable handle-callback-err */
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
@@ -5,16 +6,16 @@ import { ActivityIndicator, Dimensions, Image, ImageBackground, Keyboard, Pressa
 import Toast from 'react-native-toast-message';
 import { useDispatch } from 'react-redux';
 import { setLogedIn } from '../../store/slicer/UserSlicer';
-
+import { AsyncStorage } from 'react-native';
 const LoginPage = ({ navigation }) => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
-   const [isLoading, setIsLoading] = useState(false)
-   const dispatch = useDispatch()
+   const [isLoading, setIsLoading] = useState(false);
+   const dispatch = useDispatch();
 
 
    const loginFun = (email, password) => {
-      setIsLoading(true)
+      setIsLoading(true);
       fetch('https://shop-bc.herokuapp.com/api/login', {
          method: 'POST',
          headers: {
@@ -35,10 +36,14 @@ const LoginPage = ({ navigation }) => {
                   text1: result?.message,
                   text2: 'Thanks for being with us!',
                });
-               setIsLoading(false)
+               setIsLoading(false);
                navigation.navigate('Feed');
                console.log(result);
-               dispatch(setLogedIn(result.data._id))
+               dispatch(setLogedIn(result.data._id));
+               AsyncStorage.setItem('userData', JSON.stringify({
+                  userId: result.data._id,
+               }));
+
             } else {
                Toast.show({
                   type: 'error',
@@ -46,7 +51,7 @@ const LoginPage = ({ navigation }) => {
                   text1: result?.message,
                   text2: result?.messageTwo ? result?.messageTwo : 'Please create a account & continue',
                });
-               setIsLoading(false)
+               setIsLoading(false);
             }
          }).catch(err => {
             console.log(err);
@@ -56,7 +61,7 @@ const LoginPage = ({ navigation }) => {
                text1: 'Something went wrong',
                text2: 'Try again later',
             });
-            setIsLoading(false)
+            setIsLoading(false);
          });
    };
 
@@ -82,8 +87,8 @@ const LoginPage = ({ navigation }) => {
             }}
          >
 
-            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '20%' }}>
-               <Image source={{ uri: 'https://www.pngkit.com/png/full/395-3951545_shopping-shop-icon-white-png.png' }} style={{ height: 90, width: 90, resizeMode: 'contain', alignItems: 'center' }} />
+            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: '26%' }}>
+               <Image source={require('../../assets/image/logo.png')} style={{ height: 100, width: 100, resizeMode: 'contain', alignItems: 'center' }} />
             </View>
 
             <View style={styles.inputContainer}>

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View, Alert, RefreshControlBase, RefreshControl, FlatList } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View, Alert, RefreshControlBase, RefreshControl, FlatList, ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
@@ -8,12 +8,13 @@ import UserProductFlatList from '../../components/userCom/UserProductFlatList';
 
 const ProfillePage = ({ navigation }) => {
    const [userData, setUserData] = useState(Object);
-   const [userProduct, setUserProduct] = useState(null);
+   const [userProduct, setUserProduct] = useState(Array);
    const userId = useSelector(state => state.user.userId);
    const [refreshing, setRefreshing] = useState(false);
-
+   const [isLoading, setIsLoading] = useState(false)
 
    useEffect(() => {
+      setIsLoading(true)
       fetch('https://shop-bc.herokuapp.com/api/profile', {
          method: 'GET',
          headers: {
@@ -24,11 +25,13 @@ const ProfillePage = ({ navigation }) => {
          },
       }).then(res => res.json())
          .then((result) => {
+            setIsLoading(false)
             if (result.succ === true) {
                setUserData(result.data);
                setUserProduct(result.product);
             }
          }).catch(err => {
+            setIsLoading(false)
             console.log(err);
             Toast.show({
                type: 'error',
@@ -88,51 +91,59 @@ const ProfillePage = ({ navigation }) => {
             />
          }
       >
+         {
+            isLoading ?
+               <View style={{ backgroundColor: "#242734", height: Dimensions.get('screen').height }}>
 
-         <View style={styles.profileContainer} >
+                  <ActivityIndicator style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: -80 }} size="large" color="#fff" />
 
-            <View>
-               <Image source={{ uri: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png' }} style={styles.profileImage} />
-            </View>
-            <View>
-               <Text style={styles.nameStyle} >{userData.name}</Text>
-               <Text style={styles.emailStyle} >{userData.email}</Text>
-            </View>
-            <View style={styles.badgeStyle}>
-               <View>
-                  <Text style={styles.badgeTitle}>Product</Text>
-                  <Text style={styles.badgeItemStyle} >0</Text>
                </View>
-               <Text style={{ color: '#293443', fontSize: 30, paddingTop: 2 }}>|</Text>
-               <View>
-                  <Text style={styles.badgeTitle}>Sales</Text>
-                  <Text style={styles.badgeItemStyle} >0</Text>
-               </View>
-               <Text style={{ color: '#293443', fontSize: 30, paddingTop: 2 }}>|</Text>
-               <View>
-                  <Text style={styles.badgeTitle}>Favorite</Text>
-                  <Text style={styles.badgeItemStyle} >0</Text>
-               </View>
-            </View>
-            <View style={styles.productContainer}>
-               <View style={styles.productContainerTop} >
-                  <Text style={styles.productHeaderTitle} >All Prodcut</Text>
-                  <Text onPress={() => {
-                     navigation.navigate('NewProduct');
-                  }} style={styles.newProductTitle} >Add New Product</Text>
-               </View>
+               :
 
-               <FlatList
-                  keyExtractor={(item, index) => item._id}
-                  horizontal={true}
-                  data={userProduct}
-                  renderItem={itemData =>
-                     <UserProductFlatList data={itemData.item} />
-                  } />
+               <View style={styles.profileContainer} >
 
-            </View>
-         </View>
+                  <View>
+                     <Image source={{ uri: 'https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png' }} style={styles.profileImage} />
+                  </View>
+                  <View>
+                     <Text style={styles.nameStyle} >{userData.name}</Text>
+                     <Text style={styles.emailStyle} >{userData.email}</Text>
+                  </View>
+                  <View style={styles.badgeStyle}>
+                     <View>
+                        <Text style={styles.badgeTitle}>Product</Text>
+                        <Text style={styles.badgeItemStyle} >{userProduct.length}</Text>
+                     </View>
+                     <Text style={{ color: '#293443', fontSize: 30, paddingTop: 2 }}>|</Text>
+                     <View>
+                        <Text style={styles.badgeTitle}>Sales</Text>
+                        <Text style={styles.badgeItemStyle} >2</Text>
+                     </View>
+                     <Text style={{ color: '#293443', fontSize: 30, paddingTop: 2 }}>|</Text>
+                     <View>
+                        <Text style={styles.badgeTitle}>Favorite</Text>
+                        <Text style={styles.badgeItemStyle} >40</Text>
+                     </View>
+                  </View>
+                  <View style={styles.productContainer}>
+                     <View style={styles.productContainerTop} >
+                        <Text style={styles.productHeaderTitle} >All Prodcut</Text>
+                        <Text onPress={() => {
+                           navigation.navigate('NewProduct');
+                        }} style={styles.newProductTitle} >Add New Product</Text>
+                     </View>
 
+                     <FlatList
+                        keyExtractor={(item, index) => item._id}
+                        horizontal={true}
+                        data={userProduct}
+                        renderItem={itemData =>
+                           <UserProductFlatList data={itemData.item} />
+                        } />
+
+                  </View>
+               </View>
+         }
       </ScrollView>
    );
 };
